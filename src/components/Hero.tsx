@@ -54,7 +54,7 @@ export const Hero = () => {
             <Button 
               size="lg" 
               variant="outline" 
-              className="border-2 border-white/80 text-white hover:bg-white hover:text-primary text-lg px-10 py-7 rounded-xl font-bold backdrop-blur-sm transition-all duration-300 hover:scale-105"
+              className="border-2 border-white/80 text-primary hover:bg-white hover:text-primary text-lg px-10 py-7 rounded-xl font-bold backdrop-blur-sm transition-all duration-300 hover:scale-110"
             >
               Explore Our Services
             </Button>
