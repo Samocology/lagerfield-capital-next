@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Menu, X, ChevronDown } from "lucide-react";
+import { Menu, X, ChevronDown, Briefcase, Target, BarChart, Building, Eye, Gem, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import {
@@ -14,16 +14,16 @@ import {
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 const services = [
-  { title: "Fund Management", description: "Professional fund management solutions" },
-  { title: "Portfolio Advisory", description: "Expert portfolio guidance and strategy" },
-  { title: "Wealth Planning", description: "Comprehensive wealth management services" },
-  { title: "Institutional Investments", description: "Tailored solutions for institutions" },
+  { title: "Fund Management", description: "Professional fund management solutions", icon: <Briefcase className="h-6 w-6 text-primary" /> },
+  { title: "Portfolio Advisory", description: "Expert portfolio guidance and strategy", icon: <Target className="h-6 w-6 text-primary" /> },
+  { title: "Wealth Planning", description: "Comprehensive wealth management services", icon: <BarChart className="h-6 w-6 text-primary" /> },
+  { title: "Institutional Investments", description: "Tailored solutions for institutions", icon: <Building className="h-6 w-6 text-primary" /> },
 ];
 
 const firmLinks = [
-  { title: "Mission & Vision", description: "Our purpose and direction" },
-  { title: "Core Values", description: "The principles that guide us" },
-  { title: "Leadership Team", description: "Meet our experienced leaders" },
+  { title: "Mission & Vision", description: "Our purpose and direction", icon: <Eye className="h-6 w-6 text-primary" /> },
+  { title: "Core Values", description: "The principles that guide us", icon: <Gem className="h-6 w-6 text-primary" /> },
+  { title: "Leadership Team", description: "Meet our experienced leaders", icon: <Users className="h-6 w-6 text-primary" /> },
 ];
 
 export const Navigation = () => {
@@ -61,17 +61,18 @@ export const Navigation = () => {
                 <NavigationMenuItem>
                   <NavigationMenuTrigger className="bg-transparent">Our Services</NavigationMenuTrigger>
                   <NavigationMenuContent>
-                    <div className="grid w-[400px] gap-3 p-4 bg-card">
+                    <div className="grid w-[500px] gap-4 p-4 bg-card border rounded-lg shadow-lg">
                       {services.map((service) => (
                         <NavigationMenuLink key={service.title} asChild>
                           <Link
                             to={`/services/${service.title.toLowerCase().replace(/\s+/g, '-')}`}
-                            className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                            className="flex items-start p-4 rounded-lg transition-colors hover:bg-accent focus:bg-accent focus:outline-none"
                           >
-                            <div className="text-sm font-medium leading-none">{service.title}</div>
-                            <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                              {service.description}
-                            </p>
+                            <div className="flex-shrink-0 mr-4">{service.icon}</div>
+                            <div className="flex-grow">
+                              <div className="text-sm font-semibold leading-none text-foreground">{service.title}</div>
+                              <p className="mt-1 text-sm text-muted-foreground">{service.description}</p>
+                            </div>
                           </Link>
                         </NavigationMenuLink>
                       ))}
@@ -82,17 +83,18 @@ export const Navigation = () => {
                 <NavigationMenuItem>
                   <NavigationMenuTrigger className="bg-transparent">Our Firm</NavigationMenuTrigger>
                   <NavigationMenuContent>
-                    <div className="grid w-[400px] gap-3 p-4 bg-card">
+                    <div className="grid w-[500px] gap-4 p-4 bg-card border rounded-lg shadow-lg">
                       {firmLinks.map((link) => (
                         <NavigationMenuLink key={link.title} asChild>
                           <Link
                             to={`/firm/${link.title.toLowerCase().replace(/\s+/g, '-')}`}
-                            className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                            className="flex items-start p-4 rounded-lg transition-colors hover:bg-accent focus:bg-accent focus:outline-none"
                           >
-                            <div className="text-sm font-medium leading-none">{link.title}</div>
-                            <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                              {link.description}
-                            </p>
+                            <div className="flex-shrink-0 mr-4">{link.icon}</div>
+                            <div className="flex-grow">
+                              <div className="text-sm font-semibold leading-none text-foreground">{link.title}</div>
+                              <p className="mt-1 text-sm text-muted-foreground">{link.description}</p>
+                            </div>
                           </Link>
                         </NavigationMenuLink>
                       ))}
@@ -114,9 +116,11 @@ export const Navigation = () => {
               </NavigationMenuList>
             </NavigationMenu>
 
-            <Button variant="default" className="bg-primary hover:bg-primary/90">
-              Get Started
-            </Button>
+            <Link to="/get-started">
+              <Button variant="default" className="bg-primary hover:bg-primary/90">
+                Get Started
+              </Button>
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -155,10 +159,11 @@ export const Navigation = () => {
                         <Link
                           key={service.title}
                           to={`/services/${service.title.toLowerCase().replace(/\s+/g, '-')}`}
-                          className="block py-2 text-sm text-muted-foreground hover:text-primary transition-colors"
+                          className="flex items-center py-2 text-sm text-muted-foreground hover:text-primary transition-colors"
                           onClick={() => setMobileOpen(false)}
                         >
-                          {service.title}
+                          <div className="mr-4">{service.icon}</div>
+                          <span>{service.title}</span>
                         </Link>
                       ))}
                     </CollapsibleContent>
@@ -174,10 +179,11 @@ export const Navigation = () => {
                         <Link
                           key={link.title}
                           to={`/firm/${link.title.toLowerCase().replace(/\s+/g, '-')}`}
-                          className="block py-2 text-sm text-muted-foreground hover:text-primary transition-colors"
+                          className="flex items-center py-2 text-sm text-muted-foreground hover:text-primary transition-colors"
                           onClick={() => setMobileOpen(false)}
                         >
-                          {link.title}
+                          <div className="mr-4">{link.icon}</div>
+                          <span>{link.title}</span>
                         </Link>
                       ))}
                     </CollapsibleContent>
@@ -199,9 +205,15 @@ export const Navigation = () => {
                     Contact
                   </Link>
                   
-                  <Button variant="default" className="w-full bg-primary hover:bg-primary/90 mt-4">
-                    Get Started
-                  </Button>
+                  <Link 
+                    to="/get-started" 
+                    className="w-full"
+                    onClick={() => setMobileOpen(false)}
+                  >
+                    <Button variant="default" className="w-full bg-primary hover:bg-primary/90 mt-4">
+                      Get Started
+                    </Button>
+                  </Link>
                 </nav>
               </SheetContent>
             </Sheet>

@@ -2,13 +2,20 @@ import { useParams } from "react-router-dom";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import { Check, TrendingUp, Shield, Users, Target } from "lucide-react";
+
+import fundManagementHero from "@/assets/fund-management-hero.jpg";
+import portfolioAdvisoryHero from "@/assets/portfolio-advisory-hero.jpg";
+import wealthPlanningHero from "@/assets/wealth-planning-hero.jpg";
+import institutionalInvestmentsHero from "@/assets/institutional-investments-hero.jpg";
 
 const serviceDetails = {
   "fund-management": {
     title: "Fund Management",
     description: "Professional fund management solutions tailored to your investment objectives",
     icon: TrendingUp,
+    heroImage: fundManagementHero,
     benefits: [
       "Diversified portfolio management",
       "Risk-adjusted returns optimization",
@@ -35,6 +42,7 @@ const serviceDetails = {
     title: "Portfolio Advisory",
     description: "Expert portfolio guidance and strategic investment recommendations",
     icon: Target,
+    heroImage: portfolioAdvisoryHero,
     benefits: [
       "Personalized investment strategies",
       "Market analysis and insights",
@@ -61,6 +69,7 @@ const serviceDetails = {
     title: "Wealth Planning",
     description: "Comprehensive wealth management services for long-term financial success",
     icon: Shield,
+    heroImage: wealthPlanningHero,
     benefits: [
       "Holistic financial planning",
       "Estate planning assistance",
@@ -87,6 +96,7 @@ const serviceDetails = {
     title: "Institutional Investments",
     description: "Tailored investment solutions for institutional clients",
     icon: Users,
+    heroImage: institutionalInvestmentsHero,
     benefits: [
       "Customized investment mandates",
       "Institutional-grade infrastructure",
@@ -113,7 +123,8 @@ const serviceDetails = {
 
 const ServiceDetailPage = () => {
   const { slug } = useParams<{ slug: string }>();
-  const service = slug ? serviceDetails[slug as keyof typeof serviceDetails] : null;
+  const normalizedSlug = slug?.toLowerCase().replace(/\s+/g, '-');
+  const service = normalizedSlug ? serviceDetails[normalizedSlug as keyof typeof serviceDetails] : null;
 
   if (!service) {
     return (
@@ -135,16 +146,24 @@ const ServiceDetailPage = () => {
       <Navigation />
       <main className="pt-20">
         {/* Hero Section */}
-        <section className="relative py-20 bg-gradient-to-br from-primary/5 to-secondary/5">
-          <div className="container mx-auto px-4">
+        <section className="relative min-h-[50vh] py-20 overflow-hidden flex items-center justify-center">
+          <div className="absolute inset-0">
+            <img
+              src={service.heroImage}
+              alt={service.title}
+              className="w-full h-full object-cover opacity-80"
+            />
+            <div className="absolute inset-0 bg-black/50"></div> {/* Dark overlay for text readability */}
+          </div>
+          <div className="container mx-auto px-4 relative z-10 text-white">
             <div className="max-w-4xl mx-auto text-center">
-              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 mb-6">
-                <Icon className="h-8 w-8 text-primary" />
+              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-white/10 mb-6">
+                <Icon className="h-8 w-8 text-white" />
               </div>
-              <h1 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">
+              <h1 className="text-4xl md:text-5xl font-bold mb-6">
                 {service.title}
               </h1>
-              <p className="text-lg text-muted-foreground">
+              <p className="text-lg">
                 {service.description}
               </p>
             </div>
@@ -152,18 +171,18 @@ const ServiceDetailPage = () => {
         </section>
 
         {/* Benefits Section */}
-        <section className="py-20">
+        <section className="py-20 bg-background">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">
               <h2 className="text-3xl font-bold mb-12 text-center">Key Benefits</h2>
               <div className="grid md:grid-cols-2 gap-6">
                 {service.benefits.map((benefit, index) => (
-                  <div key={index} className="flex items-start space-x-3">
+                  <Card key={index} className="p-6 flex items-start space-x-3">
                     <div className="flex-shrink-0 w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center mt-1">
                       <Check className="h-4 w-4 text-primary" />
                     </div>
                     <p className="text-foreground">{benefit}</p>
-                  </div>
+                  </Card>
                 ))}
               </div>
             </div>
@@ -175,12 +194,12 @@ const ServiceDetailPage = () => {
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">
               <h2 className="text-3xl font-bold mb-12 text-center">What We Offer</h2>
-              <div className="space-y-8">
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {service.features.map((feature, index) => (
-                  <div key={index} className="p-6 rounded-lg border border-border bg-card">
+                  <Card key={index} className="p-6 text-center transition-all duration-300 hover:scale-105 hover:shadow-lg">
                     <h3 className="text-xl font-semibold mb-3">{feature.title}</h3>
                     <p className="text-muted-foreground">{feature.description}</p>
-                  </div>
+                  </Card>
                 ))}
               </div>
             </div>

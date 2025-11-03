@@ -1,5 +1,6 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 import { TrendingUp, PieChart, Briefcase, Building2, CheckCircle2 } from "lucide-react";
 import servicesBg from "@/assets/services-bg.jpg";
 
@@ -90,12 +91,14 @@ export const Services = () => {
                     ))}
                   </ul>
                   
-                  <Button 
-                    variant="outline" 
-                    className="w-full mt-6 border-2 group-hover:bg-primary group-hover:text-white group-hover:border-primary transition-all duration-300"
-                  >
-                    Learn More About {service.title}
-                  </Button>
+                  <Link to={`/services/${service.title.toLowerCase().replace(/\s+/g, '-')}`}>
+                    <Button 
+                      variant="outline" 
+                      className="w-full mt-6 border-2 group-hover:bg-primary group-hover:text-white group-hover:border-primary transition-all duration-300"
+                    >
+                      Learn More About {service.title}
+                    </Button>
+                  </Link>
                 </CardContent>
               </Card>
             );
